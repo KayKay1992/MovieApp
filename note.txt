@@ -1,0 +1,21 @@
+Setting up for the project.
+
+we created a new project at appwrite.
+2. we created an empty folder with the project name. we opened it in the vscode and create our project by running npx create-expo-app@latest ./ this will make sure the current version of expo app project is created in our current directory. visit reactnative.dev.
+3. when you go to the site select what you are going to use either android or ios. 
+4. for andriod in your phone go to appstore and look for expo go and download and install it.
+5. i ran this command to install router  npm install expo-router
+6. to install ajv because it seems to be missing module i ran this command npm install ajv
+7. then a ran this command to statrt my expo project  npx expo start
+8. open expo in your phone a scan the qr code. boom you will see your project in your phone.
+9. go to app folder->tabs->index.txt to change the welcome view.
+
+you have succefully establish connection between your code and expo app.
+
+10. Now explain what each folder does startin from tsconfig.json, this contains the rules typecript will use to enforce type safety throughout the project. Readme is a text file containing the information about the project. Package lock and package json contains the project script and dependencies and meta data. app.json file contains the configuration option for the project. gitignore ignores some files you dont want to show in your git repo. etc. after explaining the files we reset the project to the bearest minimum thats actually the work of rest-project.js in scripts folder. 
+
+11. we reset the project by first stop the application from running and run this command npm run reset-project. do you want to move everything to example folder select no.
+
+12 restart your project by running npx expo start and press r for automatic reload.
+
+we are done with complete setup.
