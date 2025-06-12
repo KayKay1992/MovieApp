@@ -1,14 +1,29 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableHighlight, TouchableWithoutFeedback, Alert } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  Alert,
+  ActivityIndicator,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 
-const App = () => {
-  // Function to handle button presses
-  const handlePress = (buttonName: string) => {
-    Alert.alert(`${buttonName} Pressed`, `You clicked the ${buttonName} button!`);
+const App: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handlePress = (buttonName: 'Highlight' | 'WithoutFeedback') => {
+    setIsLoading(true);
+    // Simulate a loading task (e.g., API call)
+    setTimeout(() => {
+      setIsLoading(false);
+      Alert.alert(`${buttonName} Pressed`, `You clicked the ${buttonName} button!`);
+    }, 2000); // 2-second delay
   };
 
   return (
-    // Root View: Full-screen container with Flexbox
     <View style={styles.container}>
       {/* Header Section */}
       <View style={styles.header}>
@@ -28,26 +43,32 @@ const App = () => {
         </View>
       </View>
 
-      {/* Button Section: Includes TouchableHighlight and TouchableWithoutFeedback */}
+      {/* Button Section: Includes TouchableHighlight, TouchableWithoutFeedback, and ActivityIndicator */}
       <View style={styles.buttonContainer}>
-        <TouchableHighlight
-          onPress={() => handlePress('Highlight')}
-          style={styles.button}
-          underlayColor="#e64a19"
-          accessibilityLabel="Highlight button"
-          accessibilityRole="button"
-        >
-          <Text style={styles.buttonText}>Press Me (Highlight)</Text>
-        </TouchableHighlight>
-        <TouchableWithoutFeedback
-          onPress={() => handlePress('WithoutFeedback')}
-          accessibilityLabel="No feedback button"
-          accessibilityRole="button"
-        >
-          <View style={styles.noFeedbackButton}>
-            <Text style={styles.buttonText}>Press Me (No Feedback)</Text>
-          </View>
-        </TouchableWithoutFeedback>
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#6200ea" style={styles.loader} />
+        ) : (
+          <>
+            <TouchableHighlight
+              onPress={() => handlePress('Highlight')}
+              style={styles.button}
+              underlayColor="#e64a19"
+              accessibilityLabel="Highlight button"
+              accessibilityRole="button"
+            >
+              <Text style={styles.buttonText}>Press Me (Highlight)</Text>
+            </TouchableHighlight>
+            <TouchableWithoutFeedback
+              onPress={() => handlePress('WithoutFeedback')}
+              accessibilityLabel="No feedback button"
+              accessibilityRole="button"
+            >
+              <View style={styles.noFeedbackButton}>
+                <Text style={styles.buttonText}>Press Me (No Feedback)</Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </>
+        )}
       </View>
 
       {/* Footer Section: Row layout with multiple items */}
@@ -66,18 +87,31 @@ const App = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, // Takes up the full screen
-    backgroundColor: '#f0f0f0', // Light gray background
-    padding: 20,
-  },
+const styles = StyleSheet.create<{
+  container: ViewStyle;
+  header: ViewStyle;
+  headerText: TextStyle;
+  card: ViewStyle;
+  cardHeader: ViewStyle;
+  cardHeaderText: TextStyle;
+  cardBody: ViewStyle;
+  cardBodyText: TextStyle;
+  buttonContainer: ViewStyle;
+  button: ViewStyle;
+  noFeedbackButton: ViewStyle;
+  buttonText: TextStyle;
+  loader: ViewStyle;
+  footer: ViewStyle;
+  footerItem: ViewStyle;
+  footerText: TextStyle;
+}>({
+  container: { flex: 1, backgroundColor: '#f0f0f0', padding: 20 },
   header: {
-    backgroundColor: '#6200ea', // Purple background
+    backgroundColor: '#6200ea',
     padding: 15,
     borderRadius: 10,
     marginBottom: 20,
-    alignItems: 'center', // Center content horizontally
+    alignItems: 'center',
   },
   headerText: {
     fontSize: 24,
@@ -85,19 +119,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   card: {
-    backgroundColor: '#ffffff', // White background
+    backgroundColor: '#ffffff',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ddd',
     marginBottom: 20,
-    shadowColor: '#000', // Shadow for iOS
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 5, // Shadow for Android
+    elevation: 5,
   },
   cardHeader: {
-    backgroundColor: '#03a9f4', // Blue background
+    backgroundColor: '#03a9f4',
     padding: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
@@ -116,18 +150,18 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   buttonContainer: {
-    alignItems: 'center', // Center buttons horizontally
+    alignItems: 'center',
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#ff5722', // Orange background
+    backgroundColor: '#ff5722',
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 25,
     marginVertical: 10,
   },
   noFeedbackButton: {
-    backgroundColor: '#0288d1', // Blue background for no-feedback button
+    backgroundColor: '#0288d1',
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 25,
@@ -139,22 +173,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  loader: {
+    marginVertical: 20,
+  },
   footer: {
-    flexDirection: 'row', // Horizontal layout
-    justifyContent: 'space-between', // Space items evenly
-    backgroundColor: '#212121', // Dark background
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#212121',
     padding: 10,
     borderRadius: 10,
   },
   footerItem: {
-    flex: 1, // Each item takes equal space
+    flex: 1,
     alignItems: 'center',
   },
   footerText: {
     fontSize: 16,
     color: '#ffffff',
   },
-});
+} as const);
 
 export default App;
 
