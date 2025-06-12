@@ -1,7 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 
 const App = () => {
+  // Function to handle button press
+  const handlePress = () => {
+    Alert.alert('Button Pressed', 'You clicked the button!');
+  };
+
   return (
     // Root View: Full-screen container with Flexbox
     <View style={styles.container}>
@@ -21,6 +26,13 @@ const App = () => {
             showcases Flexbox layout and styling.
           </Text>
         </View>
+      </View>
+
+      {/* Button Section: Demonstrates touch handling */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={handlePress} style={styles.button}>
+          <Text style={styles.buttonText}>Press Me</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Footer Section: Row layout with multiple items */}
@@ -88,6 +100,21 @@ const styles = StyleSheet.create({
     color: '#333',
     lineHeight: 24,
   },
+  buttonContainer: {
+    alignItems: 'center', // Center button horizontally
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#ff5722', // Orange background
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#ffffff',
+    fontWeight: 'bold',
+  },
   footer: {
     flexDirection: 'row', // Horizontal layout
     justifyContent: 'space-between', // Space items evenly
@@ -106,7 +133,6 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
 
 
 // import { Text, View } from "react-native";
