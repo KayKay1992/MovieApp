@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, Alert } from 'react-native';
 
 const App = () => {
   // Function to handle button press
@@ -28,11 +28,15 @@ const App = () => {
         </View>
       </View>
 
-      {/* Button Section: Demonstrates touch handling */}
+      {/* Button Section: Demonstrates touch handling with TouchableHighlight */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handlePress} style={styles.button}>
+        <TouchableHighlight
+          onPress={handlePress}
+          style={styles.button}
+          underlayColor="#e45367" // Darker orange when pressed
+        >
           <Text style={styles.buttonText}>Press Me</Text>
-        </TouchableOpacity>
+        </TouchableHighlight>
       </View>
 
       {/* Footer Section: Row layout with multiple items */}
@@ -114,6 +118,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#ffffff',
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   footer: {
     flexDirection: 'row', // Horizontal layout
