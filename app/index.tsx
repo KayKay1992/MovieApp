@@ -9,19 +9,48 @@ import {
   ActivityIndicator,
   ViewStyle,
   TextStyle,
+  FlatList,
+  TouchableOpacity,
 } from 'react-native';
+
+interface ListItem {
+  id: string;
+  title: string;
+}
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handlePress = (buttonName: 'Highlight' | 'WithoutFeedback') => {
     setIsLoading(true);
-    // Simulate a loading task (e.g., API call)
     setTimeout(() => {
       setIsLoading(false);
       Alert.alert(`${buttonName} Pressed`, `You clicked the ${buttonName} button!`);
-    }, 2000); // 2-second delay
+    }, 2000);
   };
+
+  const listData: ListItem[] = [
+    { id: '1', title: 'Item 1' },
+    { id: '2', title: 'Item 2' },
+    { id: '3', title: 'Item 3' },
+    { id: '4', title: 'Item 4' },
+    { id: '5', title: 'Item 5' },
+  ];
+
+  const handleItemPress = (item: ListItem) => {
+    Alert.alert('Item Pressed', `You selected ${item.title}`);
+  };
+
+  const renderItem = ({ item }: { item: ListItem }) => (
+    <TouchableOpacity
+      style={styles.listItem}
+      onPress={() => handleItemPress(item)}
+      accessibilityLabel={`Select ${item.title}`}
+      accessibilityRole="button"
+    >
+      <Text style={styles.listItemText}>{item.title}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
@@ -71,6 +100,18 @@ const App: React.FC = () => {
         )}
       </View>
 
+      {/* List Section: Displays FlatList of items */}
+      <View style={styles.listContainer}>
+        <Text style={styles.listHeaderText}>Sample List</Text>
+        <FlatList
+          data={listData}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          style={styles.flatList}
+          contentContainerStyle={styles.flatListContent}
+        />
+      </View>
+
       {/* Footer Section: Row layout with multiple items */}
       <View style={styles.footer}>
         <View style={styles.footerItem}>
@@ -101,6 +142,12 @@ const styles = StyleSheet.create<{
   noFeedbackButton: ViewStyle;
   buttonText: TextStyle;
   loader: ViewStyle;
+  listContainer: ViewStyle;
+  listHeaderText: TextStyle;
+  flatList: ViewStyle;
+  flatListContent: ViewStyle;
+  listItem: ViewStyle;
+  listItemText: TextStyle;
   footer: ViewStyle;
   footerItem: ViewStyle;
   footerText: TextStyle;
@@ -175,6 +222,34 @@ const styles = StyleSheet.create<{
   },
   loader: {
     marginVertical: 20,
+  },
+  listContainer: {
+    flex: 1,
+    marginBottom: 20,
+  },
+  listHeaderText: {
+    fontSize: 20,
+    color: '#333',
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  flatList: {
+    flex: 1,
+  },
+  flatListContent: {
+    paddingBottom: 20,
+  },
+  listItem: {
+    backgroundColor: '#ffffff',
+    padding: 15,
+    borderRadius: 8,
+    marginVertical: 5,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  listItemText: {
+    fontSize: 16,
+    color: '#333',
   },
   footer: {
     flexDirection: 'row',
