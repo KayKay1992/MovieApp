@@ -11,6 +11,7 @@ import {
   TextStyle,
   FlatList,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
 interface ListItem {
@@ -35,6 +36,10 @@ const App: React.FC = () => {
     { id: '3', title: 'Item 3' },
     { id: '4', title: 'Item 4' },
     { id: '5', title: 'Item 5' },
+    { id: '6', title: 'Item 6' },
+    { id: '7', title: 'Item 7' },
+    { id: '8', title: 'Item 8' },
+    { id: '9', title: 'Item 9' },
   ];
 
   const handleItemPress = (item: ListItem) => {
@@ -54,63 +59,69 @@ const App: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {/* Header Section */}
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Welcome to My App</Text>
-      </View>
-
-      {/* Card Section: Demonstrates nested Views and styling */}
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <Text style={styles.cardHeaderText}>Featured Content</Text>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollViewContent}
+      >
+        {/* Header Section */}
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Welcome to My App</Text>
         </View>
-        <View style={styles.cardBody}>
-          <Text style={styles.cardBodyText}>
-            This is a card-like component created using nested View components. It
-            showcases Flexbox layout and styling.
-          </Text>
+
+        {/* Card Section: Demonstrates nested Views and styling */}
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardHeaderText}>Featured Content</Text>
+          </View>
+          <View style={styles.cardBody}>
+            <Text style={styles.cardBodyText}>
+              This is a card-like component created using nested View components. It
+              showcases Flexbox layout and styling.
+            </Text>
+          </View>
         </View>
-      </View>
 
-      {/* Button Section: Includes TouchableHighlight, TouchableWithoutFeedback, and ActivityIndicator */}
-      <View style={styles.buttonContainer}>
-        {isLoading ? (
-          <ActivityIndicator size="large" color="#6200ea" style={styles.loader} />
-        ) : (
-          <>
-            <TouchableHighlight
-              onPress={() => handlePress('Highlight')}
-              style={styles.button}
-              underlayColor="#e64a19"
-              accessibilityLabel="Highlight button"
-              accessibilityRole="button"
-            >
-              <Text style={styles.buttonText}>Press Me (Highlight)</Text>
-            </TouchableHighlight>
-            <TouchableWithoutFeedback
-              onPress={() => handlePress('WithoutFeedback')}
-              accessibilityLabel="No feedback button"
-              accessibilityRole="button"
-            >
-              <View style={styles.noFeedbackButton}>
-                <Text style={styles.buttonText}>Press Me (No Feedback)</Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </>
-        )}
-      </View>
+        {/* Button Section: Includes TouchableHighlight, TouchableWithoutFeedback, and ActivityIndicator */}
+        <View style={styles.buttonContainer}>
+          {isLoading ? (
+            <ActivityIndicator size="large" color="#6200ea" style={styles.loader} />
+          ) : (
+            <>
+              <TouchableHighlight
+                onPress={() => handlePress('Highlight')}
+                style={styles.button}
+                underlayColor="#e64a19"
+                accessibilityLabel="Highlight button"
+                accessibilityRole="button"
+              >
+                <Text style={styles.buttonText}>Press Me (Highlight)</Text>
+              </TouchableHighlight>
+              <TouchableWithoutFeedback
+                onPress={() => handlePress('WithoutFeedback')}
+                accessibilityLabel="No feedback button"
+                accessibilityRole="button"
+              >
+                <View style={styles.noFeedbackButton}>
+                  <Text style={styles.buttonText}>Press Me (No Feedback)</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </>
+          )}
+        </View>
 
-      {/* List Section: Displays FlatList of items */}
-      <View style={styles.listContainer}>
-        <Text style={styles.listHeaderText}>Sample List</Text>
-        <FlatList
-          data={listData}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          style={styles.flatList}
-          contentContainerStyle={styles.flatListContent}
-        />
-      </View>
+        {/* List Section: Displays FlatList of items */}
+        <View style={styles.listContainer}>
+          <Text style={styles.listHeaderText}>Sample List</Text>
+          <FlatList
+            data={listData}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            style={styles.flatList}
+            contentContainerStyle={styles.flatListContent}
+            scrollEnabled={false} // Disable FlatList scrolling to avoid conflict with ScrollView
+          />
+        </View>
+      </ScrollView>
 
       {/* Footer Section: Row layout with multiple items */}
       <View style={styles.footer}>
@@ -130,6 +141,8 @@ const App: React.FC = () => {
 
 const styles = StyleSheet.create<{
   container: ViewStyle;
+  scrollView: ViewStyle;
+  scrollViewContent: ViewStyle;
   header: ViewStyle;
   headerText: TextStyle;
   card: ViewStyle;
@@ -152,7 +165,17 @@ const styles = StyleSheet.create<{
   footerItem: ViewStyle;
   footerText: TextStyle;
 }>({
-  container: { flex: 1, backgroundColor: '#f0f0f0', padding: 20 },
+  container: {
+    flex: 1,
+    backgroundColor: '#f0f0f0',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollViewContent: {
+    padding: 20,
+    paddingBottom: 40, // Extra padding to avoid footer overlap
+  },
   header: {
     backgroundColor: '#6200ea',
     padding: 15,
@@ -224,7 +247,6 @@ const styles = StyleSheet.create<{
     marginVertical: 20,
   },
   listContainer: {
-    flex: 1,
     marginBottom: 20,
   },
   listHeaderText: {
@@ -234,7 +256,7 @@ const styles = StyleSheet.create<{
     marginBottom: 10,
   },
   flatList: {
-    flex: 1,
+    // No flex: 1 to allow ScrollView to control scrolling
   },
   flatListContent: {
     paddingBottom: 20,
@@ -257,6 +279,8 @@ const styles = StyleSheet.create<{
     backgroundColor: '#212121',
     padding: 10,
     borderRadius: 10,
+    marginHorizontal: 20,
+    marginBottom: 20,
   },
   footerItem: {
     flex: 1,
