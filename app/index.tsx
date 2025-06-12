@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableHighlight, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, TouchableWithoutFeedback, Alert } from 'react-native';
 
 const App = () => {
-  // Function to handle button press
-  const handlePress = () => {
-    Alert.alert('Button Pressed', 'You clicked the button!');
+  // Function to handle button presses
+  const handlePress = (buttonName: string) => {
+    Alert.alert(`${buttonName} Pressed`, `You clicked the ${buttonName} button!`);
   };
 
   return (
@@ -28,15 +28,26 @@ const App = () => {
         </View>
       </View>
 
-      {/* Button Section: Demonstrates touch handling with TouchableHighlight */}
+      {/* Button Section: Includes TouchableHighlight and TouchableWithoutFeedback */}
       <View style={styles.buttonContainer}>
         <TouchableHighlight
-          onPress={handlePress}
+          onPress={() => handlePress('Highlight')}
           style={styles.button}
-          underlayColor="#e45367" // Darker orange when pressed
+          underlayColor="#e64a19"
+          accessibilityLabel="Highlight button"
+          accessibilityRole="button"
         >
-          <Text style={styles.buttonText}>Press Me</Text>
+          <Text style={styles.buttonText}>Press Me (Highlight)</Text>
         </TouchableHighlight>
+        <TouchableWithoutFeedback
+          onPress={() => handlePress('WithoutFeedback')}
+          accessibilityLabel="No feedback button"
+          accessibilityRole="button"
+        >
+          <View style={styles.noFeedbackButton}>
+            <Text style={styles.buttonText}>Press Me (No Feedback)</Text>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
 
       {/* Footer Section: Row layout with multiple items */}
@@ -105,7 +116,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   buttonContainer: {
-    alignItems: 'center', // Center button horizontally
+    alignItems: 'center', // Center buttons horizontally
     marginBottom: 20,
   },
   button: {
@@ -113,6 +124,14 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 25,
+    marginVertical: 10,
+  },
+  noFeedbackButton: {
+    backgroundColor: '#0288d1', // Blue background for no-feedback button
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+    marginVertical: 10,
   },
   buttonText: {
     fontSize: 18,
