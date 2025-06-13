@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  SafeAreaView,
   View,
   Text,
   StyleSheet,
@@ -58,88 +59,91 @@ const App: React.FC = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollViewContent}
-      >
-        {/* Header Section */}
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Welcome to My App</Text>
-        </View>
-
-        {/* Card Section: Demonstrates nested Views and styling */}
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardHeaderText}>Featured Content</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollViewContent}
+        >
+          {/* Header Section */}
+          <View style={styles.header}>
+            <Text style={styles.headerText}>Welcome to My App</Text>
           </View>
-          <View style={styles.cardBody}>
-            <Text style={styles.cardBodyText}>
-              This is a card-like component created using nested View components. It
-              showcases Flexbox layout and styling.
-            </Text>
+
+          {/* Card Section */}
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardHeaderText}>Featured Content</Text>
+            </View>
+            <View style={styles.cardBody}>
+              <Text style={styles.cardBodyText}>
+                This is a card-like component created using nested View components. It
+                showcases Flexbox layout and styling.
+              </Text>
+            </View>
           </View>
-        </View>
 
-        {/* Button Section: Includes TouchableHighlight, TouchableWithoutFeedback, and ActivityIndicator */}
-        <View style={styles.buttonContainer}>
-          {isLoading ? (
-            <ActivityIndicator size="large" color="#6200ea" style={styles.loader} />
-          ) : (
-            <>
-              <TouchableHighlight
-                onPress={() => handlePress('Highlight')}
-                style={styles.button}
-                underlayColor="#e64a19"
-                accessibilityLabel="Highlight button"
-                accessibilityRole="button"
-              >
-                <Text style={styles.buttonText}>Press Me (Highlight)</Text>
-              </TouchableHighlight>
-              <TouchableWithoutFeedback
-                onPress={() => handlePress('WithoutFeedback')}
-                accessibilityLabel="No feedback button"
-                accessibilityRole="button"
-              >
-                <View style={styles.noFeedbackButton}>
-                  <Text style={styles.buttonText}>Press Me (No Feedback)</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </>
-          )}
-        </View>
+          {/* Button Section */}
+          <View style={styles.buttonContainer}>
+            {isLoading ? (
+              <ActivityIndicator size="large" color="#6200ea" style={styles.loader} />
+            ) : (
+              <>
+                <TouchableHighlight
+                  onPress={() => handlePress('Highlight')}
+                  style={styles.button}
+                  underlayColor="#e64a19"
+                  accessibilityLabel="Highlight button"
+                  accessibilityRole="button"
+                >
+                  <Text style={styles.buttonText}>Press Me (Highlight)</Text>
+                </TouchableHighlight>
+                <TouchableWithoutFeedback
+                  onPress={() => handlePress('WithoutFeedback')}
+                  accessibilityLabel="No feedback button"
+                  accessibilityRole="button"
+                >
+                  <View style={styles.noFeedbackButton}>
+                    <Text style={styles.buttonText}>Press Me (No Feedback)</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              </>
+            )}
+          </View>
 
-        {/* List Section: Displays FlatList of items */}
-        <View style={styles.listContainer}>
-          <Text style={styles.listHeaderText}>Sample List</Text>
-          <FlatList
-            data={listData}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            style={styles.flatList}
-            contentContainerStyle={styles.flatListContent}
-            scrollEnabled={false} // Disable FlatList scrolling to avoid conflict with ScrollView
-          />
-        </View>
-      </ScrollView>
+          {/* List Section */}
+          <View style={styles.listContainer}>
+            <Text style={styles.listHeaderText}>Sample List</Text>
+            <FlatList
+              data={listData}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+              style={styles.flatList}
+              contentContainerStyle={styles.flatListContent}
+              scrollEnabled={false}
+            />
+          </View>
+        </ScrollView>
 
-      {/* Footer Section: Row layout with multiple items */}
-      <View style={styles.footer}>
-        <View style={styles.footerItem}>
-          <Text style={styles.footerText}>Home</Text>
-        </View>
-        <View style={styles.footerItem}>
-          <Text style={styles.footerText}>Profile</Text>
-        </View>
-        <View style={styles.footerItem}>
-          <Text style={styles.footerText}>Settings</Text>
+        {/* Footer Section */}
+        <View style={styles.footer}>
+          <View style={styles.footerItem}>
+            <Text style={styles.footerText}>Home</Text>
+          </View>
+          <View style={styles.footerItem}>
+            <Text style={styles.footerText}>Profile</Text>
+          </View>
+          <View style={styles.footerItem}>
+            <Text style={styles.footerText}>Settings</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create<{
+  safeArea: ViewStyle;
   container: ViewStyle;
   scrollView: ViewStyle;
   scrollViewContent: ViewStyle;
@@ -165,16 +169,20 @@ const styles = StyleSheet.create<{
   footerItem: ViewStyle;
   footerText: TextStyle;
 }>({
-  container: {
+
+  safeArea: {
     flex: 1,
     backgroundColor: '#f0f0f0',
+  },
+  container: {
+    flex: 1,
   },
   scrollView: {
     flex: 1,
   },
   scrollViewContent: {
     padding: 20,
-    paddingBottom: 40, // Extra padding to avoid footer overlap
+    paddingBottom: 40,
   },
   header: {
     backgroundColor: '#6200ea',
@@ -255,9 +263,7 @@ const styles = StyleSheet.create<{
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  flatList: {
-    // No flex: 1 to allow ScrollView to control scrolling
-  },
+  flatList: {},
   flatListContent: {
     paddingBottom: 20,
   },
@@ -293,6 +299,8 @@ const styles = StyleSheet.create<{
 } as const);
 
 export default App;
+
+
 
 
 // import { Text, View } from "react-native";
