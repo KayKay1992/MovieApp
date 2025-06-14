@@ -6,28 +6,23 @@ import {
   Image,
   ImageBackground,
   SafeAreaView,
-  Modal,
-  Alert,
-  TouchableOpacity,
+  Switch,
+  StatusBar,
 } from 'react-native';
 
 const App: React.FC = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const showAlert = () => {
-    Alert.alert(
-      'React Native Alert',
-      'Do you want to continue?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ],
-      { cancelable: true }
-    );
-  };
+  const toggleSwitch = () => setIsDarkMode((prev) => !prev);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, isDarkMode && styles.darkBackground]}>
+      {/* Status Bar */}
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={isDarkMode ? '#333' : '#f5f5f5'}
+      />
+
       {/* Header with background image */}
       <ImageBackground
         source={{ uri: 'https://picsum.photos/800/300' }}
@@ -43,43 +38,26 @@ const App: React.FC = () => {
           source={{ uri: 'https://randomuser.me/api/portraits/women/44.jpg' }}
           style={styles.profileImage}
         />
-        <Text style={styles.name}>Jane Doe</Text>
-      </View>
-
-      {/* Action Buttons */}
-      <View style={styles.buttonGroup}>
-        <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}>
-          <Text style={styles.buttonText}>Open Modal</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.alertButton]} onPress={showAlert}>
-          <Text style={styles.buttonText}>Show Alert</Text>
-        </TouchableOpacity>
+        <Text style={[styles.name, isDarkMode && styles.textLight]}>Jane Doe</Text>
       </View>
 
       {/* Body Content */}
       <View style={styles.body}>
-        <Text style={styles.description}>
+        <Text style={[styles.description, isDarkMode && styles.textLight]}>
           Explore the beautiful world of React Native. This layout combines both static and background images!
         </Text>
-      </View>
 
-      {/* Modal Component */}
-      <Modal
-        visible={modalVisible}
-        animationType="slide"
-        transparent
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Hello from the Modal!</Text>
-            <Text style={styles.modalMessage}>You can customize this dialog box freely.</Text>
-            <TouchableOpacity style={styles.modalButton} onPress={() => setModalVisible(false)}>
-              <Text style={styles.modalButtonText}>Close Modal</Text>
-            </TouchableOpacity>
-          </View>
+        {/* Dark Mode Toggle */}
+        <View style={styles.switchContainer}>
+          <Text style={[styles.switchLabel, isDarkMode && styles.textLight]}>Dark Mode</Text>
+          <Switch
+            value={isDarkMode}
+            onValueChange={toggleSwitch}
+            trackColor={{ false: '#ccc', true: '#81b0ff' }}
+            thumbColor={isDarkMode ? '#f5dd4b' : '#f4f3f4'}
+          />
         </View>
-      </Modal>
+      </View>
     </SafeAreaView>
   );
 };
@@ -88,6 +66,9 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+  },
+  darkBackground: {
+    backgroundColor: '#121212',
   },
   headerBackground: {
     width: '100%',
@@ -120,26 +101,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 10,
   },
-  buttonGroup: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginVertical: 20,
-    gap: 10,
-  },
-  button: {
-    backgroundColor: '#6200ea',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 6,
-    marginHorizontal: 5,
-  },
-  alertButton: {
-    backgroundColor: '#f44336',
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
   body: {
     padding: 20,
   },
@@ -148,43 +109,23 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     color: '#333',
   },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    justifyContent: 'center',
+  switchContainer: {
+    marginTop: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
-  modalContent: {
-    backgroundColor: '#fff',
-    width: 300,
-    padding: 25,
-    borderRadius: 10,
-    alignItems: 'center',
-    elevation: 5,
+  switchLabel: {
+    fontSize: 18,
+    color: '#333',
   },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  modalMessage: {
-    fontSize: 16,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  modalButton: {
-    backgroundColor: '#6200ea',
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    borderRadius: 6,
-  },
-  modalButtonText: {
+  textLight: {
     color: '#fff',
-    fontWeight: 'bold',
   },
 });
 
 export default App;
+
 
 
 
