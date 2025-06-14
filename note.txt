@@ -1,51 +1,99 @@
 React Native Components.
 
-Basic React Native component. (safeAreaView component)
+Basic React Native component. (Image and backgroundImage component)
 
 changes made 
 
-✅ What is SafeAreaView?
-SafeAreaView is a React Native component that renders content within the safe boundaries of a device screen. This is especially important on devices with notches, rounded corners, or home indicator areas (like iPhones X and newer), where content could be obscured.
+Sure! Let’s break down the **`Image`** and **`ImageBackground`** components in React Native:
 
-It ensures that your app’s UI avoids these unsafe areas automatically.
+---
 
-✅ How to Use It in Your App
-Wrap your main container (<View style={styles.container}>) inside a SafeAreaView.
+## 🖼️ 1. `Image` Component
 
-✅ Modified Code (with SafeAreaView)
-Import it:
+The `Image` component is used to display a static image in your app.
 
-At the top, add:
+### ✅ Basic Usage:
+
+```tsx
+import { Image } from 'react-native';
+
+<Image
+  source={{ uri: 'https://example.com/image.png' }}
+  style={{ width: 100, height: 100 }}
+/>
+```
+
+### ✅ You can also use a **local image**:
+
+```tsx
+<Image
+  source={require('./assets/logo.png')}
+  style={{ width: 100, height: 100 }}
+/>
+```
+
+### 🔧 Props:
+
+| Prop         | Type                                                        | Description                                |
+| ------------ | ----------------------------------------------------------- | ------------------------------------------ |
+| `source`     | `{ uri: string }` or `require()`                            | The image to display (remote or local).    |
+| `style`      | `object`                                                    | Defines width, height, border radius, etc. |
+| `resizeMode` | `'cover'`, `'contain'`, `'stretch'`, `'center'`, `'repeat'` | How the image should be resized.           |
+
+---
+
+## 🌄 2. `ImageBackground` Component
+
+`ImageBackground` lets you set an image **as a background for a container**, so you can overlay text, buttons, or other content on top of it.
+
+### ✅ Basic Usage:
+
+```tsx
+import { ImageBackground, Text } from 'react-native';
+
+<ImageBackground
+  source={{ uri: 'https://example.com/background.jpg' }}
+  style={{ width: '100%', height: 200 }}
+>
+  <Text style={{ color: '#fff', padding: 10 }}>Overlay Content</Text>
+</ImageBackground>
+```
+
+### 📌 Key Differences from `Image`:
+
+* `ImageBackground` acts like a `View` with an image as the background.
+* You can place child components inside it.
+* Ideal for hero headers, cards with overlays, etc.
+
+### 🔧 Props:
+
+| Prop         | Type                             | Description                                       |
+| ------------ | -------------------------------- | ------------------------------------------------- |
+| `source`     | `{ uri: string }` or `require()` | The background image source.                      |
+| `style`      | `object`                         | Controls layout size of the background container. |
+| `imageStyle` | `object`                         | Styles specifically for the background image.     |
+| `resizeMode` | `'cover'`, `'contain'`, etc.     | How the background image should be resized.       |
+
+---
+
+## ✅ Example Comparison:
+
+```tsx
+// Just an image
+<Image
+  source={{ uri: 'https://picsum.photos/200' }}
+  style={{ width: 200, height: 200 }}
+/>
+
+// Image as background
+<ImageBackground
+  source={{ uri: 'https://picsum.photos/800/200' }}
+  style={{ width: '100%', height: 150 }}
+>
+  <Text style={{ color: 'white', fontSize: 18 }}>Welcome</Text>
+</ImageBackground>
+```
+
+---
 
 
-import { SafeAreaView } from 'react-native';
-Wrap the top-level container:
-
-Update your return statement like this:
-
-
-return (
-  <SafeAreaView style={styles.safeArea}>
-    <View style={styles.container}>
-      {/* ... existing content ... */}
-    </View>
-  </SafeAreaView>
-);
-Add safeArea style:
-
-Extend your styles like this:
-
-
-safeArea: {
-  flex: 1,
-  backgroundColor: '#f0f0f0',
-},
-Note: You can also remove the background color from container and move it into safeArea to keep things cleaner.
-
-
-✅ Why it matters
-Prevents UI overlap with device notches, home indicators, or status bars.
-
-Ensures consistent look across iOS/Android devices.
-
-Good practice for production-ready apps.
