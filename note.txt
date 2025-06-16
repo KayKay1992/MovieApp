@@ -1,190 +1,26 @@
 React Native Components.
 
-Basic React Native component. (Toggle and Statusbar  component)
+Setup Styling(setting up native wind)
 
-changes made 
+Nativewind allows u to style your app just like you use tailwind css to style your web app.
 
-Sure! Let’s **extensively explain** both the `StatusBar` and `Switch` components in **React Native**, including:
+1. open a new terminal and run this command npm install nativewind tailwindcss react-native-reanimated react-native-safe-area-context.
+2. After installing it run this comman npx tailwindcss init, this will generate a configuration file, sometimes this might give you error if the tailwind css version insatlled is not compatible with the nativewind, if there is error run this command npm list tailwindcss, unInstall tailwind css  with this command npm uninstall tailwindcss and install the one matching the nativewind.
 
-* ✅ What they are
-* 🔧 How they work
-* 🧠 Use cases
-* 🛠 Best practices
-* 📦 Platform differences
-* 💡 Real-world examples
+3. in tailwind.config.js we reconfigured the file to enable tailwind to style everything within the app folder that end with those extension. we also added a babel preset.
 
----
+4. create a new file within the app folder and call it global.css and add the base, components and utilities from tailwind.
 
-## 🔘 1. `Switch` Component (React Native)
+5.then we have to set up the babel preset by creating a new file in the root directory and call it babel.config.js and set it up.
 
-### ✅ What is it?
+6. modify your metro.config.js by opening your terminal and run this command npx expo customize metro.config.js, this will create that config file, so we replace the generated one with the one we copied from nativewind instatallation doc https://www.nativewind.dev/docs/getting-started/installation. but make sure the path points exactly where your global css is located so we './app/global.css' bcomes our input path.
 
-`Switch` is a simple UI component that represents a **toggleable option** — like a light switch. It’s commonly used for **boolean settings** such as:
+7.Then we go to our app folder, _layout.tsx and import the global.css for styling.
 
-* Enable notifications
-* Turn on dark mode
-* Activate airplane mode
+8. At the root of your project create a new file called nativewind-env.d.ts and within it add this piece of code /// <reference types="nativewind/types" /> including the 3 forward slash this will enable typescript to recognise nativewind styling class preventing constant error messages.
 
-It looks like this on most devices:
+9. To test what you have done stop your project and restart it with this command npx expo start --clear, this will make sure all the changes sticked to the project.
 
-**`OFF`** ☐ → **`ON`** ☑️ (sliding interaction)
+10. Now to check whether the nativewind style is working go to index.tsx instead of those default inline styles, we remove it and rather give it a className. After making changes, you will now see the changes made.
 
----
-
-### 🔧 Basic Usage:
-
-```tsx
-import React, { useState } from 'react';
-import { View, Text, Switch } from 'react-native';
-
-const MySwitchExample = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
-
-  return (
-    <View>
-      <Text>Enable Dark Mode:</Text>
-      <Switch
-        value={isEnabled}
-        onValueChange={() => setIsEnabled(previous => !previous)}
-      />
-    </View>
-  );
-};
-```
-
----
-
-### 🔍 Props (with Explanation):
-
-| Prop            | Type       | Description                                                            |
-| --------------- | ---------- | ---------------------------------------------------------------------- |
-| `value`         | `boolean`  | Current state of the switch (on/off)                                   |
-| `onValueChange` | `function` | Function to run when the user toggles the switch                       |
-| `thumbColor`    | `string`   | Color of the circle (thumb)                                            |
-| `trackColor`    | `object`   | Colors of the track for both states: `{ false: color1, true: color2 }` |
-| `disabled`      | `boolean`  | If `true`, disables interaction                                        |
-
----
-
-### 🌐 Platform Differences:
-
-* **Android & iOS** both support the `Switch` component.
-* Visuals vary slightly (iOS has a more rounded toggle).
-* On iOS, the `thumbColor` may not be customizable on older versions.
-
----
-
-### 🧠 Use Cases:
-
-* App settings (e.g., sound, Bluetooth)
-* Preferences (e.g., enable biometric login)
-* UI themes (e.g., dark mode toggle)
-
----
-
-### 🛠 Best Practices:
-
-* Always label your switch (don’t leave users guessing)
-* Provide immediate visual feedback when toggled
-* Avoid using for more than simple binary decisions
-
----
-
-## 📶 2. `StatusBar` Component (React Native)
-
-### ✅ What is it?
-
-The **Status Bar** is the system UI at the top of your screen showing:
-
-* Time
-* Battery status
-* Network indicators
-* Notifications
-
-In React Native, the `StatusBar` component allows developers to **control its appearance** to better match your app's UI.
-
----
-
-### 🔧 Basic Usage:
-
-```tsx
-import { StatusBar } from 'react-native';
-
-<StatusBar
-  barStyle="light-content"
-  backgroundColor="#000"
-/>
-```
-
----
-
-### 🔍 Props (Detailed):
-
-| Prop              | Type      | Description                                                                    |
-| ----------------- | --------- | ------------------------------------------------------------------------------ |
-| `barStyle`        | `string`  | Style of text/icons. Options: `'default'`, `'light-content'`, `'dark-content'` |
-| `backgroundColor` | `string`  | Changes the background color (Android only)                                    |
-| `hidden`          | `boolean` | If `true`, hides the status bar entirely                                       |
-| `translucent`     | `boolean` | If `true`, allows content to render under it (Android only)                    |
-| `animated`        | `boolean` | If `true`, applies animation to changes (iOS only)                             |
-
----
-
-### 🌐 Platform Differences:
-
-| Feature           | Android | iOS   |
-| ----------------- | ------- | ----- |
-| `backgroundColor` | ✅ Yes   | ❌ No  |
-| `translucent`     | ✅ Yes   | ❌ No  |
-| `barStyle`        | ✅ Yes   | ✅ Yes |
-| `hidden`          | ✅ Yes   | ✅ Yes |
-
----
-
-### 🧠 Use Cases:
-
-* Match the status bar with your app theme
-  (dark bar for dark theme, light for light theme)
-* Hide it for full-screen videos or splash screens
-* Use `translucent` when using background images at the top
-
----
-
-### 🛠 Best Practices:
-
-* Set `barStyle` according to your background color for contrast (e.g., dark background → `light-content`)
-* Avoid hiding it unnecessarily (it contains essential info for users)
-* Animate changes on iOS to maintain smooth UI transitions
-
----
-
-### 💡 Real-World Example
-
-```tsx
-<StatusBar
-  barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-  backgroundColor={isDarkMode ? '#121212' : '#ffffff'}
-  translucent={true}
-/>
-```
-
-This snippet:
-
-* Adapts to dark mode
-* Makes the status bar semi-transparent on Android
-* Matches theme without hiding system info
-
----
-
-## 🧾 Summary Table
-
-| Component   | Purpose            | Customizable | Platforms   | Common Use               |
-| ----------- | ------------------ | ------------ | ----------- | ------------------------ |
-| `Switch`    | On/Off toggle      | ✅ Yes        | Android/iOS | Dark mode, settings      |
-| `StatusBar` | Control system bar | ✅ Yes        | Android/iOS | Theming, fullscreen apps |
-
----
-
-If you want, I can also show you how to **combine** these two: for example, toggling a `Switch` that updates the `StatusBar` style dynamically — like dark mode toggle with UI + status bar syncing.
-
-Would you like that?
+11. Now to define custom styles like color, we will go to tailwind.config.js file define some extended styles like colors, now go back to index.tsx file where replace the color style with with text primary and it will take the color u defined in tailwind.config.js
