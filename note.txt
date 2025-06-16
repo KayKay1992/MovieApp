@@ -1,26 +1,34 @@
 React Native Components.
 
-Setup Styling(setting up native wind)
+Routing and Navigation (it works like next.js routing)
 
-Nativewind allows u to style your app just like you use tailwind css to style your web app.
+Routing and navigation in React Native enable you to create multi-screen applications where users can move between different views or screens seamlessly. Unlike web applications, React Native doesn't have a built-in routing system, so you rely on third-party libraries to handle navigation. The most popular library is React Navigation, which provides a flexible and customizable solution for managing navigation in React Native apps. Below, I’ll explain the key concepts, setup, and usage of routing and navigation in React Native, focusing on React Navigation, with examples tailored to your mobile_movie_app context.
 
-1. open a new terminal and run this command npm install nativewind tailwindcss react-native-reanimated react-native-safe-area-context.
-2. After installing it run this comman npx tailwindcss init, this will generate a configuration file, sometimes this might give you error if the tailwind css version insatlled is not compatible with the nativewind, if there is error run this command npm list tailwindcss, unInstall tailwind css  with this command npm uninstall tailwindcss and install the one matching the nativewind.
+1. Key Concepts
+Routing: Defines the mapping between screens (or routes) and the application’s navigation structure. Each screen is a React component, and the navigation library manages transitions between them.
+Navigation: Refers to the user’s ability to move between screens, either via UI elements (e.g., buttons) or programmatically (e.g., after an action).
+Navigator: A component that manages the navigation state and renders the appropriate screen. React Navigation offers several types of navigators (e.g., stack, tab, drawer).
+Screen: A React component that represents a single view in the app, registered with a navigator.
+Navigation State: Tracks the current screen and history of screens visited, managed by the navigation library.
+Params: Data passed between screens (e.g., a movie ID when navigating to a movie details screen).
 
-3. in tailwind.config.js we reconfigured the file to enable tailwind to style everything within the app folder that end with those extension. we also added a babel preset.
+2. React Navigation Overview
+React Navigation is the de facto standard for navigation in React Native. It’s highly customizable, supports multiple navigator types, and works across iOS and Android
 
-4. create a new file within the app folder and call it global.css and add the base, components and utilities from tailwind.
+Navigator Types
+Stack Navigator: Mimics a stack of cards, where screens are pushed and popped (e.g., for a login flow or details page).
+Tab Navigator: Displays a tab bar for switching between screens (e.g., Home, Search, Profile).
+Drawer Navigator: A slide-out menu for navigation (e.g., a sidebar menu).
+Bottom Tabs Navigator: A tab bar at the bottom of the screen.
+Material Top Tabs Navigator: A tab bar at the top, styled like Android’s material design.
+Switch Navigator (less common): Used for one-time navigation, like switching between onboarding and main app (replaced by conditional rendering in newer versions).
 
-5.then we have to set up the babel preset by creating a new file in the root directory and call it babel.config.js and set it up.
 
-6. modify your metro.config.js by opening your terminal and run this command npx expo customize metro.config.js, this will create that config file, so we replace the generated one with the one we copied from nativewind instatallation doc https://www.nativewind.dev/docs/getting-started/installation. but make sure the path points exactly where your global css is located so we './app/global.css' bcomes our input path.
+Example;
+1. we created a new file in app folder onboarding.tsx and run rnfes to get the react native boiler plate if you dont have the plugins you can install it from the extension seach for react or react native plugins. 
 
-7.Then we go to our app folder, _layout.tsx and import the global.css for styling.
+2. Now how can we get to it from the index file, we  added a link coming from expo router  then we give it a href of the link we want. then reload your project otherwise you will have unmatched route. then test in your phone.
 
-8. At the root of your project create a new file called nativewind-env.d.ts and within it add this piece of code /// <reference types="nativewind/types" /> including the 3 forward slash this will enable typescript to recognise nativewind styling class preventing constant error messages.
+3. Similarly lets say you want to create a route that will show the details of the movie, wecreated a folder movie, then in the movie we created a dynamic route by wrapping it in square bracket. then run the rnfes to get the boiler plate, and replace the square bracket with d name of the page for instance we call it details.
 
-9. To test what you have done stop your project and restart it with this command npx expo start --clear, this will make sure all the changes sticked to the project.
-
-10. Now to check whether the nativewind style is working go to index.tsx instead of those default inline styles, we remove it and rather give it a className. After making changes, you will now see the changes made.
-
-11. Now to define custom styles like color, we will go to tailwind.config.js file define some extended styles like colors, now go back to index.tsx file where replace the color style with with text primary and it will take the color u defined in tailwind.config.js
+4.Then we extract the route params by destructuring the any name in the square bracket, for instance we have id currently, from useLocalSearchParams from expo router. then pass the link to index.tsx and check for it.
