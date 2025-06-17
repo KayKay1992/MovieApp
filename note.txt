@@ -1,34 +1,41 @@
 React Native Components.
 
-Routing and Navigation (it works like next.js routing)
+Routing and Navigation (Grouping our Route within an  application)
 
-Routing and navigation in React Native enable you to create multi-screen applications where users can move between different views or screens seamlessly. Unlike web applications, React Native doesn't have a built-in routing system, so you rely on third-party libraries to handle navigation. The most popular library is React Navigation, which provides a flexible and customizable solution for managing navigation in React Native apps. Below, I’ll explain the key concepts, setup, and usage of routing and navigation in React Native, focusing on React Navigation, with examples tailored to your mobile_movie_app context.
+Grouping routes in a React Native application is a powerful way to organize navigation, improve modularity, and enhance user experience. Using React Navigation, you can group related routes to share a common navigation structure, such as a tab bar, drawer, or nested stack navigators. This is particularly useful for your mobile_movie_app, where you might want to group routes like Home, Search, and Favorites under a tab navigator, while keeping other routes like MovieDetails or Onboarding in a separate stack navigator.
 
-1. Key Concepts
-Routing: Defines the mapping between screens (or routes) and the application’s navigation structure. Each screen is a React component, and the navigation library manages transitions between them.
-Navigation: Refers to the user’s ability to move between screens, either via UI elements (e.g., buttons) or programmatically (e.g., after an action).
-Navigator: A component that manages the navigation state and renders the appropriate screen. React Navigation offers several types of navigators (e.g., stack, tab, drawer).
-Screen: A React component that represents a single view in the app, registered with a navigator.
-Navigation State: Tracks the current screen and history of screens visited, managed by the navigation library.
-Params: Data passed between screens (e.g., a movie ID when navigating to a movie details screen).
+1. What is Route Grouping?
+Route grouping in React Navigation involves organizing related screens under a single navigator (e.g., tab, stack, or drawer) to:
 
-2. React Navigation Overview
-React Navigation is the de facto standard for navigation in React Native. It’s highly customizable, supports multiple navigator types, and works across iOS and Android
+Share a common UI (e.g., a tab bar or header).
+Simplify navigation logic by nesting navigators.
+Improve code organization by separating concerns (e.g., main app vs. onboarding).
+Enhance user experience with intuitive navigation patterns.
+For example, in mobile_movie_app:
 
-Navigator Types
-Stack Navigator: Mimics a stack of cards, where screens are pushed and popped (e.g., for a login flow or details page).
-Tab Navigator: Displays a tab bar for switching between screens (e.g., Home, Search, Profile).
-Drawer Navigator: A slide-out menu for navigation (e.g., a sidebar menu).
-Bottom Tabs Navigator: A tab bar at the bottom of the screen.
-Material Top Tabs Navigator: A tab bar at the top, styled like Android’s material design.
-Switch Navigator (less common): Used for one-time navigation, like switching between onboarding and main app (replaced by conditional rendering in newer versions).
+Main App Group: Home, Search, Favorites in a tab navigator.
+Details Group: MovieDetails in a stack navigator for drill-down navigation.
+Onboarding Group: Onboarding in a separate stack for first-time users.
 
+Basic Structure
+Here’s a common grouping pattern for mobile_movie_app:
 
-Example;
-1. we created a new file in app folder onboarding.tsx and run rnfes to get the react native boiler plate if you dont have the plugins you can install it from the extension seach for react or react native plugins. 
+Root Stack Navigator: Handles top-level routes (Onboarding, Main, MovieDetails).
+Main Tab Navigator: Groups Home, Search, and Favorites.
+Nested Stack Navigator (optional): For specific flows within tabs (e.g., a stack for Search results).
 
-2. Now how can we get to it from the index file, we  added a link coming from expo router  then we give it a href of the link we want. then reload your project otherwise you will have unmatched route. then test in your phone.
+EXAMPLE STEPS
 
-3. Similarly lets say you want to create a route that will show the details of the movie, wecreated a folder movie, then in the movie we created a dynamic route by wrapping it in square bracket. then run the rnfes to get the boiler plate, and replace the square bracket with d name of the page for instance we call it details.
+1. we cleaned up ore project by removing the last example.
+2. We created a (tabs) folder, in there we created a new _layout.tsx, 
+3. homepage is part of tabs layout so we moved the index.tsx into (tabs) folder. and we further created another files for the tabs group which include profile.tsx, saved.tsx, search.tsx.
 
-4.Then we extract the route params by destructuring the any name in the square bracket, for instance we have id currently, from useLocalSearchParams from expo router. then pass the link to index.tsx and check for it.
+4. we created another folder for movies, then in movies folder we created a dynamic file for movieDetails [id].tsx
+
+5. in _layout which is at the app directory we registered the 2 group routes (tabs and movies) using the stack.screen and we hid the header, by making header shown to false.
+
+6. in _layout which is in (tabs) directory we used the tab component wrapping the tabs.screen where we set the title to Home and also hid the title by setting headerShown to false.
+
+7.dont forget all the files should be set with boiler plate 
+
+then save and refresh your app check for the changes and the tabs at the bottom and the headers are hidden.
