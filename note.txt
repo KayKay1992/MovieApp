@@ -1,41 +1,20 @@
 React Native Components.
 
-Routing and Navigation (Grouping our Route within an  application)
+Routing and Navigation (Cutomizing the Tabs and icons)
 
-Grouping routes in a React Native application is a powerful way to organize navigation, improve modularity, and enhance user experience. Using React Navigation, you can group related routes to share a common navigation structure, such as a tab bar, drawer, or nested stack navigators. This is particularly useful for your mobile_movie_app, where you might want to group routes like Home, Search, and Favorites under a tab navigator, while keeping other routes like MovieDetails or Onboarding in a separate stack navigator.
 
-1. What is Route Grouping?
-Route grouping in React Navigation involves organizing related screens under a single navigator (e.g., tab, stack, or drawer) to:
+1. Remove the asset in your project
 
-Share a common UI (e.g., a tab bar or header).
-Simplify navigation logic by nesting navigators.
-Improve code organization by separating concerns (e.g., main app vs. onboarding).
-Enhance user experience with intuitive navigation patterns.
-For example, in mobile_movie_app:
+2. we visited this link https://github.com/adrianhajdin/react-native-movie-app?tab=readme-ov-file#links and downloaded the asset, unzipped it and moved the 4 folder into our project.
 
-Main App Group: Home, Search, Favorites in a tab navigator.
-Details Group: MovieDetails in a stack navigator for drill-down navigation.
-Onboarding Group: Onboarding in a separate stack for first-time users.
+3
 
-Basic Structure
-Here’s a common grouping pattern for mobile_movie_app:
+4. Instead of styling each icon we created a tabIcon component and pass it in each of icon.
+5. To make the icons reuseable we will use prop, we passed whatever will change as prop to other icons. e.g focused, icon and text.
 
-Root Stack Navigator: Handles top-level routes (Onboarding, Main, MovieDetails).
-Main Tab Navigator: Groups Home, Search, and Favorites.
-Nested Stack Navigator (optional): For specific flows within tabs (e.g., a stack for Search results).
+5. we can then customise how all our icons look together, we can do that directly on the Tabs component not on individual screen by using screenOptions
 
-EXAMPLE STEPS
+general explanation
+This React Native code defines a tab navigation layout using `expo-router`'s `Tabs` component, with customized tab icons and styling. Here's a concise explanation of how it customizes tabs and icons in 15 lines:
 
-1. we cleaned up ore project by removing the last example.
-2. We created a (tabs) folder, in there we created a new _layout.tsx, 
-3. homepage is part of tabs layout so we moved the index.tsx into (tabs) folder. and we further created another files for the tabs group which include profile.tsx, saved.tsx, search.tsx.
-
-4. we created another folder for movies, then in movies folder we created a dynamic file for movieDetails [id].tsx
-
-5. in _layout which is at the app directory we registered the 2 group routes (tabs and movies) using the stack.screen and we hid the header, by making header shown to false.
-
-6. in _layout which is in (tabs) directory we used the tab component wrapping the tabs.screen where we set the title to Home and also hid the title by setting headerShown to false.
-
-7.dont forget all the files should be set with boiler plate 
-
-then save and refresh your app check for the changes and the tabs at the bottom and the headers are hidden.
+The `_layout` function sets up a bottom tab navigator with four screens: Home, Search, Saved, and Profile. Each tab is defined using `Tabs.Screen`, with options to hide the header (`headerShown: false`) and a custom `tabBarIcon` rendered by the `TabIcon` component. The `TabIcon` component takes `focused`, `icon`, and `title` props to conditionally render icons based on focus state. When a tab is focused, it displays an `ImageBackground` with a highlight image, the tab's icon (tinted black), and the tab title in a styled row. When unfocused, it shows only the icon (tinted gray) in a centered view. Icons are sourced from the `icons` constant (e.g., `icons.home`, `icons.search`). The `screenOptions` configure the tab bar's appearance, setting a dark background (`#0f0D23`), rounded corners, and absolute positioning with margins. The `tabBarItemStyle` ensures icons are centered, and `tabBarShowLabel: false` hides default labels, relying on the custom `TabIcon` for visuals. The empty `styles` object suggests styling is handled via Tailwind CSS classes (e.g., `className="flex flex-row"`). This setup creates a visually consistent, modern tab bar with dynamic icon and text rendering based on focus state.
