@@ -1,20 +1,9 @@
 React Native Components.
 
-Routing and Navigation (Cutomizing the Tabs and icons)
+Customizing App Title and Icon
+
+i changed the paths for icon, android foreground image, web favicon and expo spalsh in app.json file to march with the logo directory, 
+
+to edit the title i changed the project name in app.json file to movieflex or anything you want and rescan your project.
 
 
-1. Remove the asset in your project
-
-2. we visited this link https://github.com/adrianhajdin/react-native-movie-app?tab=readme-ov-file#links and downloaded the asset, unzipped it and moved the 4 folder into our project.
-
-3
-
-4. Instead of styling each icon we created a tabIcon component and pass it in each of icon.
-5. To make the icons reuseable we will use prop, we passed whatever will change as prop to other icons. e.g focused, icon and text.
-
-5. we can then customise how all our icons look together, we can do that directly on the Tabs component not on individual screen by using screenOptions
-
-general explanation
-This React Native code defines a tab navigation layout using `expo-router`'s `Tabs` component, with customized tab icons and styling. Here's a concise explanation of how it customizes tabs and icons in 15 lines:
-
-The `_layout` function sets up a bottom tab navigator with four screens: Home, Search, Saved, and Profile. Each tab is defined using `Tabs.Screen`, with options to hide the header (`headerShown: false`) and a custom `tabBarIcon` rendered by the `TabIcon` component. The `TabIcon` component takes `focused`, `icon`, and `title` props to conditionally render icons based on focus state. When a tab is focused, it displays an `ImageBackground` with a highlight image, the tab's icon (tinted black), and the tab title in a styled row. When unfocused, it shows only the icon (tinted gray) in a centered view. Icons are sourced from the `icons` constant (e.g., `icons.home`, `icons.search`). The `screenOptions` configure the tab bar's appearance, setting a dark background (`#0f0D23`), rounded corners, and absolute positioning with margins. The `tabBarItemStyle` ensures icons are centered, and `tabBarShowLabel: false` hides default labels, relying on the custom `TabIcon` for visuals. The empty `styles` object suggests styling is handled via Tailwind CSS classes (e.g., `className="flex flex-row"`). This setup creates a visually consistent, modern tab bar with dynamic icon and text rendering based on focus state.
