@@ -1,9 +1,50 @@
-React Native Components.
+HOME SCREEN UI
 
-Customizing App Title and Icon
 
-i changed the paths for icon, android foreground image, web favicon and expo spalsh in app.json file to march with the logo directory, 
+EXPLAINING THE SEARCH BAR COMPONENT.
 
-to edit the title i changed the project name in app.json file to movieflex or anything you want and rescan your project.
+Imports: The component imports icons, React, and React Native components (Image, StyleSheet, TextInput, View).
+
+Interface (Props): Defines expected props: placeholder (string) and optional onPress (function).
+
+Component: SearchBar is a functional component that accepts placeholder and onPress as props.
+
+View: A container with flex-row styling, rounded corners, and dark background.
+
+Search Icon: Displays a search icon (from constants/icons) with purple tint and fixed size.
+
+TextInput: A text field with the passed placeholder, white text, and placeholder styling.
+
+Event Handling: onPress triggers when the input is pressed, but onChangeText is empty (no logic).
+
+Value: The input's value is hardcoded as empty (uncontrolled; likely needs state).
+
+Styling: Uses Tailwind-like classes (via a library like nativewind) for styling instead of StyleSheet.
+
+Export: The component is exported for use elsewhere, with an empty StyleSheet (unused).
+
+WHAT HAPPENED AT INDEX.TSX
+
+Imports: The component imports SearchBar, icons/images, navigation tools (Link, useRouter), and React Native components.
+
+Background: A full-screen background image (images.bg) is set behind the content.
+
+Scrollable Layout: A ScrollView ensures content fits on all screens (hides scrollbar, adds padding).
+
+Logo: Displays a centered logo (icons.logo) with top/bottom margins.
+
+SearchBar: Renders a search input that redirects to /search when pressed.
+
+Navigation: Uses useRouter() to programmatically navigate on search bar press.
+
+Styling: Applies Tailwind-like classes (flex-1, px-5, mt-20, etc.) for layout.
+
+Unused Elements: Link and Text are imported but not used (likely for future features).
+
+Responsive Design: The ScrollView dynamically adjusts height for different screens.
+
+Purpose: A home screen with a search bar and logo, ready for movie search functionality.
+
+TESTING: WHEN YOU CLICK ON SEARCH IT WILL NAVIGATE TO SEARCH PAGE.
 
 
