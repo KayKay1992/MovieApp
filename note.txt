@@ -1,34 +1,37 @@
-IMPLEMENTING TMDB API CALL INTEGRATION
+USEFETCH CUSTOM HOOK
 
-Go to tmdb site and head to api reference, click on nodejs we will use it to make the call, then get your api key it will ask you to login or create new account if you dont already have. go back to the starter guide and click on API link. Then you have api read access token copy it and do same thing for api key.
+Instaed of repeating the process of what we did in our previous lecture we can improve it by using what is known as custom hook, this hook will handle feetching the data in clean, reusable and scalable way. 
 
-we will use the endpoint for discoering movie, Go to api reference, so search for discover movie, click on the discover movie instead 
+🔍 What is a Custom Hook in React?
+A custom hook is a reusable JavaScript function that uses built-in React hooks (like useState, useEffect, useContext, etc.) to encapsulate logic that can be shared across multiple components.
 
-API Read Access Token
-eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMjhlNmRiYWQ1YTBiNjUwYmRkYTU5N2FkYjliMmUxNiIsIm5iZiI6MTc0MzA2ODQyOC4xODcsInN1YiI6IjY3ZTUxZDBjMjU4MGVlZjFlODAwM2MxNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PFCh--An3G0T3GgRQM-UpRHF5xl85e5ZkopnJ1EljpA
+✅ Key Points:
+Starts with use — It must begin with use (e.g., useFetch, useAuth, useForm) so React knows it's a hook.
 
+Reusable Logic — It helps avoid repeating the same code (like fetching data, managing forms, auth, etc.) across components.
 
-API Key
-a28e6dbad5a0b650bdda597adb9b2e16
+Not a Component — It doesn't return JSX; it returns values, functions, or state.
 
-*We will be using the end point of discovering movies  so search for discover-movie, then select discover movie instead. 
-*Then copy the entire fetching request, create a new folder in our project called services where we created a new file api.ts in it paste the code you copied and comment it out.
-* We created .env file where we registered the API READ ACCESS TOKEN.
-* Now instead of making one single request lets form a tmdb configuration which makes it reusable...ofcourse we did the tmdb confid at api.ts
+Works with Built-in Hooks — You can use other hooks like useState, useEffect inside a custom hook.
 
-EXPLAINING THE API.TS FILE 
+Pure Functions — Like all hooks, they should be pure (no conditional hook calls)
 
-Here's a 10-line explanation of the code you shared:
+we created a useFetch.ts file were we created the hook. 
 
-1. `TMDB_CONFIG` is an object storing the base URL, API key, and default headers for communicating with The Movie Database (TMDB) API.
-2. The API key is read from an environment variable: `process.env.EXPO_PUBLIC_MOVIE_API_KEY`.
-3. The headers include `accept: 'application/json'` and an `Authorization` token using a Bearer scheme.
-4. `fetchMovies` is an asynchronous function that takes an object with a `query` string.
-5. If `query` is provided, it constructs a search endpoint URL for searching movies; otherwise, it uses a default endpoint to fetch popular movies.
-6. The function calls the `fetch` API with the correct endpoint, using the GET method and headers from `TMDB_CONFIG`.
-7. It checks if the HTTP response was unsuccessful (`!response.ok`) and throws an error with the response status text.
-8. If the response is OK, it parses the JSON body using `await response.json()`.
-9. The parsed JSON contains metadata and movie results; the function returns only the `results` array.
-10. This function is useful for dynamically fetching movies either by keyword search or by popularity ranking.
+the file explained.
 
-Let me know if you'd like this explained in even simpler terms or with comments inline in the code.
+Here’s a 10-line explanation of the `useFetch` custom React hook and what it means:
+
+1. `useFetch` is a **generic React hook** for fetching data asynchronously, reusable across different components and API calls.
+2. It takes two arguments: a `fetchFunction` (any async function that returns a promise) and an optional `autoFetch` flag (defaults to `true`).
+3. It defines three pieces of state: `data` for storing results, `loading` to show fetch progress, and `error` to capture any failures.
+4. Inside the hook, the `fetchData` function is used to call the provided `fetchFunction`, updating `loading`, `data`, and `error` accordingly.
+5. The `try...catch` block ensures graceful handling of errors, converting unknown errors to a proper `Error` object.
+6. A `reset` function is also included to clear `data`, `loading`, and `error`, useful for resetting state on demand.
+7. The `useEffect` hook runs once when the component mounts — it calls `fetchData()` automatically if `autoFetch` is `true`.
+8. The hook returns an object containing `data`, `loading`, `error`, a `refetch` function to manually trigger fetching, and `reset`.
+9. This hook simplifies API integration by centralizing fetch logic and providing reusable loading/error state handling.
+10. Example usage: `const { data, loading, error, refetch } = useFetch(() => fetchMovies({ query: 'Avengers' }))`.
+
+Let me know if you want a version of this hook with pagination, query params, or dependency-based auto-fetching!
+
