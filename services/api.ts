@@ -1,38 +1,45 @@
+import Constants from 'expo-constants';
+
+// Get the API key from Expo config
+const API_KEY = Constants.expoConfig?.extra?.apiKey;
+
 export const TMDB_CONFIG = {
-    BASE_URL: 'https://api.themoviedb.org/3',
-    API_KEY: process.env.EXPO_PUBLIC_MOVIE_API_KEY,
-     headers: {
+  BASE_URL: 'https://api.themoviedb.org/3',
+  headers: {
     accept: 'application/json',
-    Authorization: `Bearer ${process.env.EXPO_PUBLIC_MOVIE_API_KEY}`
-     }
-}
+    Authorization: `Bearer ${API_KEY}`,
+  },
+};
 
-//creating a function that calls the fetch movie 
+type FetchMoviesParams = {
+  query?: string;
+  page?: number;
+};
 
-export const fetchMovies = async ({query}: {query: string}) => {
-    //define the endpoint you are calling 
-   const endpoint = query ? `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}` :
-   `${TMDB_CONFIG.BASE_URL}/discover/movie?sort_by=popularity.desc`
-   //get response 
-   const response = await fetch(endpoint, {
+export const fetchMovies = async ({ query = '', page = 1 }: FetchMoviesParams) => {
+  // Choose endpoint: search or discover
+  const endpoint = query
+    ? `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${page}`
+    : `${TMDB_CONFIG.BASE_URL}/discover/movie?sort_by=popularity.desc&page=${page}`;
+
+  const response = await fetch(endpoint, {
     method: 'GET',
     headers: TMDB_CONFIG.headers,
+  });
 
-   })
-   //check if the response is not ok
+  // Handle error
   if (!response.ok) {
-  throw new Error(`Failed to fetch movies: ${response.statusText}`);
-}
- //Extract data from the response 
- const data = await response.json()
+    console.error(`TMDB Error: ${response.status} ${response.statusText}`);
+    throw new Error(`Failed to fetch movies: ${response.statusText}`);
+  }
 
- //return the data 
- return data.results
-}
+  // Parse and return the data
+  const data = await response.json();
+  return data.results;
+};
 
 
-
-// const url = 'https://api.themoviedb.org/3/keyword/keyword_id/movies?include_adult=false&language=en-US&page=1';
+// const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
 // const options = {
 //   method: 'GET',
 //   headers: {
