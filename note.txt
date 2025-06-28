@@ -1,29 +1,34 @@
-FETCH AND DISPLAY MOVIES
-
-discover/movie instead is deprecated so its not working so i used discover movie that got me to this route 
-https://api.themoviedb.org/3/discover/movie in tmdb site to fetch all movies.
-
-explainin the movie card component 
-
-Here’s a 10-line explanation of the `MovieCard` component:
-
-1. **Imports:** React Native UI components and routing helper `Link` from `expo-router` are imported along with a custom `icons` set.
-2. **Props:** The component receives a `Movie` object with fields like `id`, `poster_path`, `title`, `vote_average`, and `release_date`.
-3. **Linking:** The entire card is wrapped in a `Link` that navigates to the movie's detail page (`/movies/{id}`) when pressed.
-4. **TouchableOpacity:** Makes the card pressable for better user interaction.
-5. **Poster Image:** Displays the movie's poster; if not available, it shows a placeholder image.
-6. **Title Text:** Shows the movie title, truncated after one line to avoid overflow.
-7. **Rating Row:** Displays a star icon and a rating (vote average divided by 2 and rounded).
-8. **Release Year:** Extracts and displays the year from the `release_date` field.
-9. **Tailwind Classes:** Uses Tailwind-style class names (`className`) for styling via a utility like `nativewind`.
-10. **Export:** The component is exported as default for use in other parts of the app.
 
 
-Editted the tailwind.config file to include all components file.
+DEVELOP SEARCH SCREEN
 
-I moved the app.json and replace it with app.config.js to enable me pass the key using process.env
+Things we learnt
+1. We recapped what it means to create a react native screen using the search.tsx file.
+2. we used our custom hook useFetch to fetch data from the 3rd party api, changes it based on the search query and also implemented debounce so that the api wont be making request whenever a user type any alphabelt .
+3. we also learnt how to use flatlist component with all the props to properly render the layout.
 
-i rconfigured my app.ts file 
+Explaining the saerch.tsx file 
 
-Then i used my movieCard component in index.ts introducing flatlist component and prop parsing.
+Here’s an **extensive 10-line explanation** of the `search` component:
 
+1. **Imports**: The component pulls in `MovieCard`, `SearchBar`, custom icons, images, and services for fetching movies, alongside core React and React Native components.
+
+2. **State Management**: It uses `useState` to store `searchQuery`, which holds the user’s current input in the search field.
+
+3. **Data Fetching**: `useFetch` is a custom hook that fetches movie data based on the `searchQuery`, but it's **initially disabled** by passing `false`.
+
+4. **Search Debounce**: A `useEffect` watches for changes to `searchQuery`, and debounces API calls by 700ms to avoid excessive fetching while typing.
+
+5. **Conditional Fetching**: If `searchQuery` isn't empty, it fetches movies with `loadMovies()`; otherwise, it calls `reset()` to clear results.
+
+6. **UI Layout**: The root `View` wraps a background image and a `FlatList`, which displays movie results using the `MovieCard` component in 3 columns.
+
+7. **Header Component**: The list’s header shows a logo, the `SearchBar` input, and conditional rendering of loading indicators, error messages, or search result titles.
+
+8. **SearchBar Functionality**: The search bar is a controlled component tied to `searchQuery` and updates via `setSearchQuery`.
+
+9. **Empty State**: If no movies are found (and it's not loading or in error), a fallback message is shown based on whether the user has typed a query.
+
+10. **Rendering**: Results are neatly styled using utility classes (likely via `nativewind`), with responsive spacing and colors based on app theme.
+
+Let me know if you'd like a visual breakdown or optimization suggestions!

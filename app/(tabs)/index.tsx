@@ -5,6 +5,7 @@ import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import { useRouter } from "expo-router";
+import { useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -14,6 +15,7 @@ import {
 } from "react-native";
 
 export default function Index() {
+    const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
   const {
     data: movies,
@@ -28,10 +30,13 @@ export default function Index() {
   const ListHeader = () => (
     <View className="px-5">
       <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
-      <SearchBar
-        onPress={() => router.push("/search")}
-        placeholder="Search for a movie"
-      />
+    <SearchBar
+  onPress={() => router.push("/search")}
+  placeholder="Search for a movie..."
+  value={searchQuery}
+  onChangeText={(text) => setSearchQuery(text)}
+/>
+
       <Text className="text-lg text-white mt-5 font-bold mb-3">
         Latest Movies
       </Text>
