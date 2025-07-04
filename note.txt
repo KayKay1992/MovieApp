@@ -1,43 +1,12 @@
-Implementing Trending movies functionality.
-
-upon search for a particular movie by several users that movie becomes trending, by tracking and analytical search, we need to track all the search made by users so to render the highest searched movie as the trending ... thats where appwrite database comes in, it keeps all information organised and accessible.
-
-traditionally you have to create the server connect it to database and host it into your react native project. for learning we are going to use backend as a service which one of them is appwrite.
+SHOW TRENDING MOVIES AT THE UI
 
 
-LETS SETUP APPWRITE.
-1. go to the appwrite website console, you will see the project you created at the biginning of this course, click it and copy the id.
-2. Go to your .env file and add it as EXPO_PUBLIC_APPWRITE_PROJECT_ID.
-3. set up the project platform, scroll down you will see add platform click on it and select react native
-4. Add a react native platform, give it a name like this Native_Movie_App  and a package name that starts with com like this com.native.movieapp then click on create platform.
-5. open second terminal to install some packages, we are not going to use the starter lets run this command together npx expo install react-native-appwrite react-native-url-polyfill
-then go to appwrite and click on go to the dashboard button.
+. In appwrite.ts we create a function that gets and returns the trending  movies
 
-6. Now lets create a database and some collections within it. the first database we created is called movies immediately we create it we will be given a database id copy it to your .env file and save it as EXPO_PUBLIC_APPWRITE_DATABASE_ID.
+* we installed mask-view package to mask our trendin movies with the corresponding number, we ran this command npm install --save @react-native-masked-view/masked-view to install the package. or this npx expo install @react-native-masked-view/masked-view
 
-7. Create a new collection within that database and call it metrics, you will also be given a new id copy it and save in your .env file as EXPO_PUBLIC_APPWRITE_COLLECTION_ID
-
-8. Now create several attributes for the metrics collection, click on attributes, then create attribute the first one will be a string of SEARCHTERM, giving it 1000 characters and making it required. after that we create another attribute of integer count as attribute key, nothing inputed in min and max and its not required we just made the default to be 0, this is how many times a user have serached a particular movie, we create another attribute of a type url and call it poster_url and make it required, this will make us get the poster of the movie people are searching for, we also added another integer attribute of movie_id and make it required, then we added another string attribute and call it title making the size to be 1000 and making it required...this get the title of the movie people are searching for.
-
-9. Now we will give it the necceassry permission to be able to update it.... so head over to settings, scroll down to permission and click any, and tick all the boxes of CRUD operations and then click update.
-
-10. Now to make sure we can read any kind of values from appwrite we create a new file within services folder and call it appwrite.ts and within it we implement 2 functions,  the first function will track the seraches made by a user 
-
-11. then we call the updateSearchCount in search.tsx file
-
-****************************
-EXPLAINING THE APPWRITE.TS FILE
-
-Here’s a 10-line explanation of the `updateSearchCount` function that tracks user searches using Appwrite in a React Native app:
-
-1. The Appwrite client is initialized with the project and endpoint to access the database.
-2. A `Databases` instance is created to interact with collections and documents in Appwrite.
-3. `updateSearchCount` receives a search query and movie object to process user searches.
-4. It queries the Appwrite database to check if the search term (`SEARCHTERM`) already exists.
-5. If a document with the same search term is found, it updates the `count` field by incrementing it.
-6. If no matching document is found, it creates a new document with `count` set to 1.
-7. The new document includes the search term, movie ID, title, and poster URL for reference.
-8. This logic helps track how many times a movie or keyword is searched by users.
-9. Errors during the process are caught and logged to help with debugging.
-10. This system enables basic analytics on user search behavior, useful for trending content or recommendations.
-
+* in appwrite.ts file we created a function that will fetch the trending movies.
+* we restructured the index.tsx file and also render the trending movie functionality properly.
+* we created a trendingCard component which we rendered in the renderitem prop of trending movie flatlist in the index.tsx file.
+*in search.tsx file we separated the updateSearchCount functionality to another useEffect state.
+*In searchBar component file we made value and onChangeText prop optional
