@@ -1,12 +1,3 @@
-SHOW TRENDING MOVIES AT THE UI
+Hide Status Bar
 
-
-. In appwrite.ts we create a function that gets and returns the trending  movies
-
-* we installed mask-view package to mask our trendin movies with the corresponding number, we ran this command npm install --save @react-native-masked-view/masked-view to install the package. or this npx expo install @react-native-masked-view/masked-view
-
-* in appwrite.ts file we created a function that will fetch the trending movies.
-* we restructured the index.tsx file and also render the trending movie functionality properly.
-* we created a trendingCard component which we rendered in the renderitem prop of trending movie flatlist in the index.tsx file.
-*in search.tsx file we separated the updateSearchCount functionality to another useEffect state.
-*In searchBar component file we made value and onChangeText prop optional
+we added the statusbar componenent from react native at the layout of our root app not the tabs layout and set the hidden property to false
