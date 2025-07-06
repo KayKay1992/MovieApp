@@ -69,9 +69,23 @@ interface MovieDetails {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  videos?: {
+    results: {
+      id: string;
+      key: string;
+      name: string;
+      site: 'YouTube' | 'Vimeo' | string;
+      type: 'Trailer' | 'Teaser' | string;
+      official?: boolean;
+      published_at?: string;
+    }[];
+  };
 }
+
 
 interface TrendingCardProps {
   movie: TrendingMovie;
   index: number;
 }
+
+ 
