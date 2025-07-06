@@ -1,3 +1,34 @@
-Hide Status Bar
+Movie Details page
 
-we added the statusbar componenent from react native at the layout of our root app not the tabs layout and set the hidden property to false
+1. we create a function to get all the movie information
+so in api.ts file we created that functionality and this is what it does
+
+1. **Fetches movie data** from TMDB API using the movie ID  
+2. **Sends GET request** with API key in the URL and required headers  
+3. **Checks response status** - throws error if request fails  
+4. **Returns JSON data** for the movie if successful  
+5. **Catches/logs errors** and re-throws them for error handling  
+
+We use this functionality at the dynamic route of the movie folder, [id].tsx to render our movie details page.
+
+EXPLAINING TH MOVIE DETAILS PAGE 
+
+Here's the explanation in 15 concise lines:
+
+1. Imports React Native components and hooks for navigation and data fetching  
+2. Defines a reusable `MovieInfo` component for labeled movie data display  
+3. Creates utility functions (`formatCurrency`, `formatRuntime`) for data formatting  
+4. Fetches movie details using a custom hook (`useFetch`) with the movie ID from URL params  
+5. Shows loading state while data is being fetched  
+6. Displays movie poster image from TMDB API with responsive sizing  
+7. Renders basic info: title, release year, runtime, and adult rating if applicable  
+8. Shows star rating with vote count in a styled container  
+9. Displays movie overview/plot summary  
+10. Lists genres with bullet separators for clean formatting  
+11. Shows original language in uppercase format  
+12. Formats and displays budget/revenue in millions/billions  
+13. Lists production companies and countries with bullet separators  
+14. Includes movie status and optional homepage link  
+15. Adds fixed-position back button at bottom with arrow icon  
+
+The component efficiently organizes movie data into logical sections with proper type handling and error states, using a scrollable layout for all content with a persistent back button.
