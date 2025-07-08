@@ -1,12 +1,1 @@
-Adding Movie Trailer
-
-1. i installed a package webview package using this command npm install react-native-webview
-2 Update your fetchMovieDetails function (in @/services/api.ts) to also fetch videos: i updated this function to include a videos
-3. Add the Trailer to your MovieDetails component using the webview.
-
- Optional Enhancements
-Add a loading indicator for WebView.
-
-Style the section with shadows or borders.
-
-Show a fallback message if no trailer is available.
+Worked on saved and profile sceen
